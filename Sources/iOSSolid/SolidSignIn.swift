@@ -26,16 +26,13 @@ public class SolidSignIn : NSObject, GenericSignIn {
     
     static private let credentialsData = try! PersistentValue<Data>(name: "SolidSignIn.data", storage: .keyChain)
     var controller: SignInController!
-    let config:SignInConfiguration
+    let config:SolidSignInConfig
+    var promptForIssuer: PromptForIssuer!
+    weak var solidDelegate: SolidSignInDelegate?
     
-    public init(config:SolidSignInConfig) {
-        self.config = SignInConfiguration(
-            issuer: config.issuer,
-            redirectURI: config.redirectURI,
-            clientName: config.clientName,
-            scopes: [.openid, .profile, .webid, .offlineAccess],
-            responseTypes:  [.code, .idToken])
-        
+    public init(config:SolidSignInConfig, delegate: SolidSignInDelegate) {
+        solidDelegate = delegate
+        self.config = config
         super.init()
         signInOutButton.delegate = self
     }
@@ -138,8 +135,40 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
     func signUserIn(_ button: SolidSignInOutButton) {
         delegate?.signInStarted(self)
         
+        guard let vc = solidDelegate?.getCurrentViewController() else {
+            delegate?.signInCancelled(self)
+            iOSShared.logger.error("Could not get current view controller")
+            return
+        }
+        
+        promptForIssuer = PromptForIssuer()
+        promptForIssuer.present(on: vc) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .cancelled:
+                self.delegate?.signInCancelled(self)
+                
+            case .error(let errorString):
+                self.delegate?.signInCancelled(self)
+                iOSShared.logger.error("Error getting issuer URL: \(errorString)")
+                
+            case .success(let issuerURL):
+                self.signInUsingController(issuerURL: issuerURL)
+            }
+        }
+    }
+    
+    private func signInUsingController(issuerURL: URL) {
         do {
-            controller = try SignInController(config: config)
+            let signInConfiguration = SignInConfiguration(
+                issuer: issuerURL.absoluteString,
+                redirectURI: self.config.redirectURI,
+                clientName: self.config.clientName,
+                scopes: [.openid, .profile, .webid, .offlineAccess],
+                responseTypes:  [.code, .idToken])
+            
+            controller = try SignInController(config: signInConfiguration)
         }
         catch let error {
             delegate?.signInCancelled(self)
@@ -149,6 +178,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
         
         controller.start { [weak self] result in
             guard let self = self else { return }
+
             switch result {
             case .success(let response):
                 guard let idToken = response.authResponse.idToken else {
@@ -164,7 +194,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 iOSShared.logger.error("Could not start Controller: \(error)")
                 self.delegate?.signInCancelled(self)
             }
-        }
+        }    
     }
     
     func signUserOut(_ button: SolidSignInOutButton) {
