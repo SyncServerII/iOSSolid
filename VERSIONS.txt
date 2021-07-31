@@ -1,5 +1,8 @@
 iOSSolid
 
+Version 0.0.3 (7/31/21)
+    Added Pod issuer prompt.
+    
 Version 0.0.2 (7/31/21)
 	Update a package version.
     
