@@ -1,2 +1,3 @@
 # iOSSolid
-Solid Pod sign in for SyncServerII
+
+A description of this package.
