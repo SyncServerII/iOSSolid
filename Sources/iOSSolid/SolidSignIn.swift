@@ -27,7 +27,7 @@ public class SolidSignIn : NSObject, GenericSignIn {
     static private let credentialsData = try! PersistentValue<Data>(name: "SolidSignIn.data", storage: .keyChain)
     var controller: SignInController!
     let config:SolidSignInConfig
-    var promptForIssuer: PromptForIssuer!
+    var promptForUserDetails: PromptForUserDetails!
     weak var solidDelegate: SolidSignInDelegate?
     
     public init(config:SolidSignInConfig, delegate: SolidSignInDelegate) {
@@ -141,8 +141,8 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
             return
         }
         
-        promptForIssuer = PromptForIssuer()
-        promptForIssuer.present(on: vc) { [weak self] result in
+        promptForUserDetails = PromptForUserDetails()
+        promptForUserDetails.present(on: vc) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -153,16 +153,16 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 self.delegate?.signInCancelled(self)
                 iOSShared.logger.error("Error getting issuer URL: \(errorString)")
                 
-            case .success(let issuerURL):
-                self.signInUsingController(issuerURL: issuerURL)
+            case .success(let userDetails):
+                self.signInUsingController(userDetails: userDetails)
             }
         }
     }
     
-    private func signInUsingController(issuerURL: URL) {
+    private func signInUsingController(userDetails: PromptForUserDetails.Result.UserDetails) {
         do {
             let signInConfiguration = SignInConfiguration(
-                issuer: issuerURL.absoluteString,
+                issuer: userDetails.issuer.absoluteString,
                 redirectURI: self.config.redirectURI,
                 clientName: self.config.clientName,
                 scopes: [.openid, .profile, .webid, .offlineAccess],
@@ -187,7 +187,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                     return
                 }
                 
-                Self.savedCreds = SolidSavedCreds(parameters: response.parameters, idToken: idToken)
+                Self.savedCreds = SolidSavedCreds(parameters: response.parameters, idToken: idToken, email: userDetails.email, username: userDetails.username)
                 self.delegate?.signInCompleted(self, autoSignIn: self.autoSignIn)
 
             case .failure(let error):

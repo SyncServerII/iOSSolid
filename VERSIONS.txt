@@ -1,5 +1,8 @@
 iOSSolid
 
+Version 0.0.4 (7/31/21)
+    Improved user details prompt.
+    
 Version 0.0.3 (7/31/21)
     Added Pod issuer prompt.
     

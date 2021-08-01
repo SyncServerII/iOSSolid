@@ -9,6 +9,7 @@ import Foundation
 import iOSSignIn
 import ServerShared
 import iOSShared
+import SolidAuthSwiftTools
 
 public class SolidCredentials : GenericCredentials, CustomDebugStringConvertible {
     public var emailAddress: String! {
@@ -42,10 +43,11 @@ public class SolidCredentials : GenericCredentials, CustomDebugStringConvertible
         var result = [String:String]()
         result[ServerConstants.XTokenTypeKey] = AuthTokenType.SolidToken.rawValue
         
-        let parameterData: Data
+        let serverPacket = ServerPacket(parameters: savedCreds.parameters, email: email, username: username)
+        let serverData: Data
         do {
-            parameterData = try JSONEncoder().encode(savedCreds.parameters)
-            result[ServerConstants.HTTPAccountDetailsKey] = parameterData.base64EncodedString()
+            serverData = try JSONEncoder().encode(serverPacket)
+            result[ServerConstants.HTTPAccountDetailsKey] = serverData.base64EncodedString()
         } catch let error {
             iOSShared.logger.error("Could not encode parameters into data for Solid creds: \(error)")
         }
