@@ -1,15 +1,20 @@
 iOSSolid
 
+Version 0.0.5 (8/19/21)
+    * Using toBase64 method. Improved button name.
+    * Now sending base64 encoded `CodeParameters` in http header in HTTPAccountDetailsKey.
+        (Not sending email/username any more)
+
 Version 0.0.4 (7/31/21)
-    Improved user details prompt.
+    * Improved user details prompt.
     
 Version 0.0.3 (7/31/21)
-    Added Pod issuer prompt.
+    * Added Pod issuer prompt.
     
 Version 0.0.2 (7/31/21)
-	Update a package version.
+	* Update a package version.
     
 Version 0.0.1 (7/31/21)
-	Initial commit.
+	* Initial commit.
     
 

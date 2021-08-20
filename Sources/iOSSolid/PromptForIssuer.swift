@@ -37,7 +37,7 @@ class PromptForUserDetails {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             completion(.cancelled)
         }))
-        alertController.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+        alertController.addAction(UIAlertAction(title: "Continue", style: .default, handler: { action in
             guard let issuer = alertController.textFields?[0].text else {
                 completion(.error("No text entered for issuer"))
                 return

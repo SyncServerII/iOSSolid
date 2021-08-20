@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/SyncServerII/iOSShared.git",
         "state": {
           "branch": null,
-          "revision": "4b732b4915f51ab83d1c54ccb3ad6854a968084f",
-          "version": "0.15.0"
+          "revision": "5c96850acd62d4bfe589da96a7c2cadab8d4093b",
+          "version": "0.17.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/SyncServerII/ServerShared.git",
         "state": {
           "branch": null,
-          "revision": "d45c95cffb0c792516c5a556ad7ddae709c6dc82",
-          "version": "0.13.1"
+          "revision": "5f6ed0477e1eb33794fc52957aefecfc0cfa410f",
+          "version": "0.13.2"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/crspybits/SolidAuthSwift.git",
         "state": {
           "branch": null,
-          "revision": "9b4ca0654570863f946cf11e75f7edbf2b38aa93",
-          "version": "0.0.2"
+          "revision": "0f01acda6b4446efd47964e595bd66d3b8a1964b",
+          "version": "0.0.9"
         }
       },
       {
@@ -137,12 +137,12 @@
         }
       },
       {
-        "package": "SwiftJWT",
-        "repositoryURL": "https://github.com/crspybits/Swift-JWT.git",
+        "package": "SwiftJWT2",
+        "repositoryURL": "https://github.com/crspybits/Swift-JWT2.git",
         "state": {
           "branch": null,
-          "revision": "63551370327fb66589d468df84689e334749268c",
-          "version": "3.6.201"
+          "revision": "2f928445272b8c7a567ab485c2a5a3c3d129eec5",
+          "version": "3.6.202"
         }
       },
       {

@@ -43,16 +43,15 @@ public class SolidCredentials : GenericCredentials, CustomDebugStringConvertible
         var result = [String:String]()
         result[ServerConstants.XTokenTypeKey] = AuthTokenType.SolidToken.rawValue
         
-        let serverPacket = ServerPacket(parameters: savedCreds.parameters, email: email, username: username)
-        let serverData: Data
         do {
-            serverData = try JSONEncoder().encode(serverPacket)
-            result[ServerConstants.HTTPAccountDetailsKey] = serverData.base64EncodedString()
+            result[ServerConstants.HTTPAccountDetailsKey] = try savedCreds.parameters.toBase64()
         } catch let error {
             iOSShared.logger.error("Could not encode parameters into data for Solid creds: \(error)")
         }
         
         result[ServerConstants.HTTPIdTokenKey] = self.savedCreds.idToken
+        
+        iOSShared.logger.debug("httpRequestHeaders: \(result)")
         
         return result
     }
