@@ -167,7 +167,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 redirectURI: self.config.redirectURI,
                 clientName: self.config.clientName,
                 scopes: [.openid, .profile, .webid, .offlineAccess],
-                responseTypes:  [.code, .idToken],
+                responseTypes:  [.code],
                 grantTypes: [.authorizationCode, .refreshToken],
                 authenticationMethod: .basic)
             

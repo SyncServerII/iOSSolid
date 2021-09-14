@@ -1,5 +1,9 @@
 iOSSolid
 
+Version 0.0.7 (9/13/21)
+    Removed .idToken responseTypes from SignInConfiguration.
+        That doesn't work with some issuers.
+    
 Version 0.0.6 (9/13/21)
     * Update SolidAuthSwift package.
     * Added support for user entering storage location after basic sign in completed.
