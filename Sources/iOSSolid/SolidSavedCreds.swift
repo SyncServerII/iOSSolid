@@ -24,11 +24,13 @@ public class SolidSavedCreds: GenericCredentialsCodable {
     public var email:String?
     let parameters: CodeParameters
     let idToken: String
+    let storageIRI: URL?
     
-    public init(parameters: CodeParameters, idToken: String, email: String?, username: String?) {
+    public init(parameters: CodeParameters, idToken: String, email: String?, username: String?, storageIRI: URL?) {
         self.parameters = parameters
         self.idToken = idToken
         self.email = email
         self.username = username
+        self.storageIRI = storageIRI
     }
 }

@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Flight-School/AnyCodable.git",
         "state": {
           "branch": null,
-          "revision": "69261f239f0fffaf51495dadc4f8483fbfe97025",
-          "version": "0.6.1"
+          "revision": "b1a7a8a6186f2fcb28f7bda67cfc545de48b3c80",
+          "version": "0.6.2"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/SyncServerII/iOSShared.git",
         "state": {
           "branch": null,
-          "revision": "5c96850acd62d4bfe589da96a7c2cadab8d4093b",
-          "version": "0.17.0"
+          "revision": "1795da58d2cde2e92710e9ca9f514b7d5e1d54ea",
+          "version": "0.17.1"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/SyncServerII/iOSSignIn.git",
         "state": {
           "branch": null,
-          "revision": "fc4cd030e21f224c4bab721ceaedef984dc82b4c",
-          "version": "0.5.0"
+          "revision": "6219dc141c4bc8aeeddd71fd40be4062cd678634",
+          "version": "0.5.1"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/vapor/jwt-kit.git",
         "state": {
           "branch": null,
-          "revision": "df7955305940ea0fcd1626a0a6d1a1556623f95e",
-          "version": "4.2.3"
+          "revision": "7a9a04df93e71de10fa2e8d6e9430dd0a7924643",
+          "version": "4.2.4"
         }
       },
       {
@@ -101,12 +101,30 @@
         }
       },
       {
+        "package": "SerdParser",
+        "repositoryURL": "https://github.com/kasei/serd-parser",
+        "state": {
+          "branch": null,
+          "revision": "f40bf3794670aaa68415e408a257b63a9c6f37d5",
+          "version": "0.0.3"
+        }
+      },
+      {
         "package": "ServerShared",
         "repositoryURL": "https://github.com/SyncServerII/ServerShared.git",
         "state": {
           "branch": null,
-          "revision": "5f6ed0477e1eb33794fc52957aefecfc0cfa410f",
-          "version": "0.13.2"
+          "revision": "44fb423bac86c9c32ff0febdbb95cefe039bf75f",
+          "version": "0.14.1"
+        }
+      },
+      {
+        "package": "SFSafeSymbols",
+        "repositoryURL": "https://github.com/piknotech/SFSafeSymbols.git",
+        "state": {
+          "branch": null,
+          "revision": "c61de7a6e9eb1520d32316b06d5932accd974e70",
+          "version": "2.1.3"
         }
       },
       {
@@ -114,8 +132,8 @@
         "repositoryURL": "https://github.com/crspybits/SolidAuthSwift.git",
         "state": {
           "branch": null,
-          "revision": "0f01acda6b4446efd47964e595bd66d3b8a1964b",
-          "version": "0.0.9"
+          "revision": "b231b035611e19377ab41c5ba6b31508c786bc98",
+          "version": "0.0.13"
         }
       },
       {
@@ -123,8 +141,8 @@
         "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
         "state": {
           "branch": null,
-          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
-          "version": "0.12.2"
+          "revision": "9af51e2edf491c0ea632e369a6566e09b65aa333",
+          "version": "0.13.0"
         }
       },
       {
@@ -161,6 +179,15 @@
           "branch": null,
           "revision": "aa94b38bf88c7d9cbc87ceafcdffadaffbc2bffa",
           "version": "0.1.0"
+        }
+      },
+      {
+        "package": "Cserd",
+        "repositoryURL": "https://github.com/kasei/swift-serd.git",
+        "state": {
+          "branch": null,
+          "revision": "437506d3a0a1e960f7c6fcbf3e51fda84d65c4ec",
+          "version": "0.0.4"
         }
       },
       {

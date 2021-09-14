@@ -51,6 +51,8 @@ public class SolidCredentials : GenericCredentials, CustomDebugStringConvertible
         
         result[ServerConstants.HTTPIdTokenKey] = self.savedCreds.idToken
         
+        result[ServerConstants.HTTPAccountStorageKey] = self.savedCreds.storageIRI?.absoluteString
+        
         iOSShared.logger.debug("httpRequestHeaders: \(result)")
         
         return result

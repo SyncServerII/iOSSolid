@@ -59,3 +59,4 @@ class PromptForUserDetails {
         viewController.present(alertController, animated: true, completion: nil)
     }
 }
+

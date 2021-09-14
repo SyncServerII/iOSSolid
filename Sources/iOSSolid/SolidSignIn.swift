@@ -28,6 +28,7 @@ public class SolidSignIn : NSObject, GenericSignIn {
     var controller: SignInController!
     let config:SolidSignInConfig
     var promptForUserDetails: PromptForUserDetails!
+    var promptForStorage: PromptForStorage!
     weak var solidDelegate: SolidSignInDelegate?
     
     public init(config:SolidSignInConfig, delegate: SolidSignInDelegate) {
@@ -140,7 +141,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
             iOSShared.logger.error("Could not get current view controller")
             return
         }
-        
+
         promptForUserDetails = PromptForUserDetails()
         promptForUserDetails.present(on: vc) { [weak self] result in
             guard let self = self else { return }
@@ -166,7 +167,9 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 redirectURI: self.config.redirectURI,
                 clientName: self.config.clientName,
                 scopes: [.openid, .profile, .webid, .offlineAccess],
-                responseTypes:  [.code, .idToken])
+                responseTypes:  [.code, .idToken],
+                grantTypes: [.authorizationCode, .refreshToken],
+                authenticationMethod: .basic)
             
             controller = try SignInController(config: signInConfiguration)
         }
@@ -186,9 +189,51 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                     self.delegate?.signInCancelled(self)
                     return
                 }
+
+                guard let vc = self.solidDelegate?.getCurrentViewController() else {
+                    self.delegate?.signInCancelled(self)
+                    iOSShared.logger.error("Could not get current view controller")
+                    return
+                }
+
+                func finish(storageIRI: URL?) {
+                    Self.savedCreds = SolidSavedCreds(parameters: response.parameters, idToken: idToken, email: userDetails.email, username: userDetails.username, storageIRI: storageIRI)
+                    self.delegate?.signInCompleted(self, autoSignIn: self.autoSignIn)
+                }
+
+                // Need to know if this is a (a) sign in of an existing user or (b) sign in of a new user. Only if it's a new user do we want to prompt for storage.
+
+                switch self.delegate?.accountMode(self) {
+                case .signIn:
+                    finish(storageIRI: nil)
+                    return
+                case .acceptInvitation:
+                    break
+                case .createOwningUser:
+                    break
+                case .none:
+                    break
+                }
                 
-                Self.savedCreds = SolidSavedCreds(parameters: response.parameters, idToken: idToken, email: userDetails.email, username: userDetails.username)
-                self.delegate?.signInCompleted(self, autoSignIn: self.autoSignIn)
+                let defaultStorageIRI = response.storageIRI?.appendingPathComponent(self.config.defaultCloudFolderName)
+                
+                self.promptForStorage = PromptForStorage()
+                self.promptForStorage.present(on: vc, defaultStorageIRI: defaultStorageIRI) { result in
+                    switch result {
+                    case .success(let storage):
+                        switch storage {
+                        case .iri(let storageIRI):
+                            finish(storageIRI: storageIRI)
+                            
+                        case .cancelSignIn:
+                            self.delegate?.signInCancelled(self)
+                        }
+                        
+                    case .failure(let error):
+                        iOSShared.logger.error("Error in prompt for storage IRI: \(error)")
+                        self.delegate?.signInCancelled(self)
+                    }
+                }
 
             case .failure(let error):
                 iOSShared.logger.error("Could not start Controller: \(error)")

@@ -1,5 +1,10 @@
 iOSSolid
 
+Version 0.0.6 (9/13/21)
+    * Update SolidAuthSwift package.
+    * Added support for user entering storage location after basic sign in completed.
+        With cloud folder name appended to storage location.
+        
 Version 0.0.5 (8/19/21)
     * Using toBase64 method. Improved button name.
     * Now sending base64 encoded `CodeParameters` in http header in HTTPAccountDetailsKey.
