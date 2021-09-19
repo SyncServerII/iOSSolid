@@ -51,6 +51,9 @@ public class SolidCredentials : GenericCredentials, CustomDebugStringConvertible
         
         result[ServerConstants.HTTPIdTokenKey] = self.savedCreds.idToken
         
+        // This is required because the users webid is used as a unique account name for Solid accounts on SyncServer.
+        result[ServerConstants.HTTPAccountIdKey] = self.savedCreds.parameters.webid
+        
         iOSShared.logger.debug("httpRequestHeaders: \(result)")
         
         return result

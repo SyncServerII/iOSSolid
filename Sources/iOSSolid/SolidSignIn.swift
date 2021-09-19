@@ -194,7 +194,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 func finish(storageIRI: URL?) {
                     let params: ServerParameters
                     if let storageIRI = storageIRI {
-                        params = ServerParameters(refresh: response.parameters.refresh, storageIRI: storageIRI, jwksURL: response.parameters.jwksURL)
+                        params = ServerParameters(refresh: response.parameters.refresh, storageIRI: storageIRI, jwksURL: response.parameters.jwksURL, webid: response.parameters.webid)
                     }
                     else {
                         params = response.parameters

@@ -1,5 +1,8 @@
 iOSSolid
 
+Version 0.0.9 (9/19/21)
+    Added webid to parameters going up to server.
+    
 Version 0.0.8 (9/19/21)
     Updated for changes in SolidAuthSwift.
         
