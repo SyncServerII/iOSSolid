@@ -1,5 +1,8 @@
 iOSSolid
 
+Version 0.0.8 (9/19/21)
+    Updated for changes in SolidAuthSwift.
+        
 Version 0.0.7 (9/13/21)
     Removed .idToken responseTypes from SignInConfiguration.
         That doesn't work with some issuers.

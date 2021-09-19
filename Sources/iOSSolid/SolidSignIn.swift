@@ -12,6 +12,7 @@ import iOSShared
 import PersistentValue
 import UIKit
 import SolidAuthSwiftUI
+import SolidAuthSwiftTools
 
 public class SolidSignIn : NSObject, GenericSignIn {    
     public var signInName: String = "Solid"
@@ -184,12 +185,6 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
 
             switch result {
             case .success(let response):
-                guard let idToken = response.authResponse.idToken else {
-                    iOSShared.logger.error("Could not get id token from controller response")
-                    self.delegate?.signInCancelled(self)
-                    return
-                }
-
                 guard let vc = self.solidDelegate?.getCurrentViewController() else {
                     self.delegate?.signInCancelled(self)
                     iOSShared.logger.error("Could not get current view controller")
@@ -197,7 +192,15 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                 }
 
                 func finish(storageIRI: URL?) {
-                    Self.savedCreds = SolidSavedCreds(parameters: response.parameters, idToken: idToken, email: userDetails.email, username: userDetails.username, storageIRI: storageIRI)
+                    let params: ServerParameters
+                    if let storageIRI = storageIRI {
+                        params = ServerParameters(refresh: response.parameters.refresh, storageIRI: storageIRI, jwksURL: response.parameters.jwksURL)
+                    }
+                    else {
+                        params = response.parameters
+                    }
+                    
+                    Self.savedCreds = SolidSavedCreds(parameters: params, idToken: response.idToken, email: userDetails.email, username: userDetails.username)
                     self.delegate?.signInCompleted(self, autoSignIn: self.autoSignIn)
                 }
 
@@ -215,7 +218,7 @@ extension SolidSignIn: SolidSignInOutButtonDelegate {
                     break
                 }
                 
-                let defaultStorageIRI = response.storageIRI?.appendingPathComponent(self.config.defaultCloudFolderName)
+                let defaultStorageIRI = response.parameters.storageIRI?.appendingPathComponent(self.config.defaultCloudFolderName)
                 
                 self.promptForStorage = PromptForStorage()
                 self.promptForStorage.present(on: vc, defaultStorageIRI: defaultStorageIRI) { result in

@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/crspybits/SolidAuthSwift.git",
         "state": {
           "branch": null,
-          "revision": "b231b035611e19377ab41c5ba6b31508c786bc98",
-          "version": "0.0.13"
+          "revision": "626a4701071e55bcdd849c9350b1f2a6f48806da",
+          "version": "0.0.15"
         }
       },
       {
