@@ -1,5 +1,8 @@
 iOSSolid
 
+Version 0.0.10 (10/16/21)
+	Added access token parameter to ServerParameters.
+
 Version 0.0.9 (9/19/21)
     Added webid to parameters going up to server.
     
